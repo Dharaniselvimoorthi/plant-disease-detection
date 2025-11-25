@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌿 Prediction Result</title>
+<style>
+body{margin:0;padding:0;font-family:'Poppins',sans-serif;display:flex;justify-content:center;align-items:center;height:100vh;background:linear-gradient(135deg,#a8e6cf,#dcedc1,#aed581);overflow:hidden;color:#1b5e20;}
+.leaf{position:absolute;width:15px;height:15px;background:url('https://cdn-icons-png.flaticon.com/512/766/766255.png') center/contain no-repeat;opacity:0.6;animation:fall 10s linear infinite;}
+.leaf:nth-child(1){left:10%;animation-delay:0s;}
+.leaf:nth-child(2){left:30%;animation-delay:2s;}
+.leaf:nth-child(3){left:50%;animation-delay:4s;}
+.leaf:nth-child(4){left:70%;animation-delay:6s;}
+.leaf:nth-child(5){left:90%;animation-delay:8s;}
+@keyframes fall{0%{transform:translateY(-10%) rotate(0deg);opacity:0.8;}50%{transform:translateY(50vh) rotate(180deg);opacity:1;}100%{transform:translateY(100vh) rotate(360deg);opacity:0.5;}}
+.result-box{background:white;padding:40px;border-radius:20px;box-shadow:0 8px 30px rgba(56,142,60,0.4);text-align:center;animation:fadeIn 1s ease;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+img{width:250px;height:250px;object-fit:cover;border-radius:15px;margin-bottom:20px;border:3px solid #4caf50;box-shadow:0 6px 20px rgba(0,100,0,0.3);}
+h2{color:#2e7d32;margin-bottom:10px;}
+p{font-size:18px;margin-bottom:25px;}
+button{background:#43a047;color:white;border:none;padding:12px 30px;border-radius:25px;cursor:pointer;font-size:16px;transition:0.3s;}
+button:hover{background:#1b5e20;transform:scale(1.05);}
+</style>
+</head>
+<body>
+<div class="leaf"></div>
+<div class="leaf"></div>
+<div class="leaf"></div>
+<div class="leaf"></div>
+<div class="leaf"></div>
+
+<div class="result-box">
+<img src="{{ image_path }}" alt="Leaf Image">
+<h2>🌿 Prediction Result</h2>
+<p><strong>{{ prediction_text }}</strong></p>
+<button onclick="window.location.href='/dashboard'">Predict Another</button>
+</div>
+</body>
+</html>
