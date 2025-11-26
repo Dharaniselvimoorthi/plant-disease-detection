@@ -1,5 +1,6 @@
 Flask==3.1.2
 tensorflow==2.20.0
+python-3.10.13
 numpy
 pillow
 scikit-learn
