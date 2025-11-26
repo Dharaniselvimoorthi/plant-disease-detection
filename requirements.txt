@@ -1,8 +1,10 @@
 Flask==3.1.2
 tensorflow==2.20.0
-python-3.10.13
-numpy
-pillow
-scikit-learn
-gunicorn
-h5py
+keras==3.12.0
+numpy==2.3.5
+scikit-learn==1.7.2
+pillow==12.0.0
+h5py==3.15.1
+gunicorn==23.0.0
+scipy==1.16.3
+
