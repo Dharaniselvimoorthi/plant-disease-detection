@@ -9,15 +9,15 @@ app = Flask(__name__)
 app.secret_key = "plants123"
 
 # -----------------------------
-# MODEL PATH
+# MODEL PATH  (Render server path)
 # -----------------------------
-MODEL_PATH = r"C:\plant_disease_detection\model\model.h5"
+MODEL_PATH = os.path.join("model", "model.h5")
 
 if not os.path.exists(MODEL_PATH):
     raise FileNotFoundError(f"Model not found at {MODEL_PATH}")
 
 model = load_model(MODEL_PATH)
-print("Model loaded:", model.input_shape)
+print("Model Loaded Successfully")
 
 # -----------------------------
 # UPLOAD FOLDER
@@ -26,12 +26,12 @@ UPLOAD_FOLDER = "static/uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # -----------------------------
-# LOAD CLASS NAMES (14 classes)
+# LOAD CLASS NAMES
 # -----------------------------
 LABEL_MAP_FILE = "label_map.json"
 
 if not os.path.exists(LABEL_MAP_FILE):
-    raise FileNotFoundError("label_map.json not found. Run save_labels.py first!")
+    raise FileNotFoundError("label_map.json not found.")
 
 with open(LABEL_MAP_FILE, "r") as f:
     class_names = json.load(f)
@@ -48,8 +48,6 @@ def login():
 
 @app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
-    if request.method == 'POST':
-        return render_template('home.html')
     return render_template('home.html')
 
 @app.route('/predict', methods=['POST'])
@@ -72,11 +70,10 @@ def predict():
 
     # PREDICT
     pred = model.predict(arr)
-    cls = int(np.argmax(pred[0]))     # convert numpy int32 → Python int
+    cls = int(np.argmax(pred[0]))
     predicted_class = class_names[str(cls)]
     accuracy = round(float(np.max(pred[0]) * 100), 2)
 
-    # SAVE RESULT
     session['prediction_text'] = f"{predicted_class} ({accuracy}% confidence)"
     session['image_path'] = f"static/uploads/{file.filename}"
 
@@ -97,5 +94,9 @@ def result():
 def analyze_again():
     return render_template('home.html')
 
+# -----------------------------
+# RENDER DEPLOY PORT CONFIG
+# -----------------------------
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
